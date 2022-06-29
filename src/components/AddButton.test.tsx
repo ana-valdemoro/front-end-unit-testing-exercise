@@ -13,7 +13,7 @@ describe('UI test for AddButton', () => {
         expect(button).toBeInTheDocument(); expect(button).not.toBeNull();
     });
 
-    it("Should add a new User when AddButton is clicked", async () => {
+    it("Should trigger handleClick Event", async () => {
         const handleClick = jest.fn(() => true);
         render(<AddButton people={people} setPeople={handleClick} />);
         const button = screen.getByText("Add");

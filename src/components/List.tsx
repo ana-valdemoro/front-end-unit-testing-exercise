@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { getUsers } from "../services/userService";
+import AddButton from "./AddButton";
 
 function List() {
-  // const [isLoading, setLoading] = useState(true);
-  const [people, setPeople] = useState<undefined | any>(undefined);
+  const [people, setPeople] = useState<undefined | object[]>(undefined);
 
   useEffect(() => {
     const fectPeople = async () => {
-      let people;
+      let people: object[];
       try {
         people = await (await getUsers()).json();
+        setPeople(people);
       } catch (e) {
         console.error(e);
       }
-
-      setPeople(people);
     };
     fectPeople();
 
@@ -29,11 +28,14 @@ function List() {
   }
 
   return (
-    <ul>
-      {people.map((person: any) => (
-        <li key={person.id}>{person.name} </li>
-      ))}
-    </ul>
+    <>
+      <ul>
+        {people.map((person: any) => (
+          <li key={person.id}>{person.name} </li>
+        ))}
+      </ul>
+      <AddButton people={people} setPeople={setPeople} />
+    </>
   );
 }
 
