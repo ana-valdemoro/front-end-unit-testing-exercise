@@ -1,10 +1,14 @@
+import { handleAddUser } from "../utils";
+
 interface IProps {
-    handleAddUser: any
+    people: object[],
+    setPeople: any
 }
 
-export default function AddButton({ handleAddUser }: IProps) {
+
+export default function AddButton({ people, setPeople }: IProps) {
 
     return (
-        <button onClick={handleAddUser}>Add</ button>
+        <button onClick={() => handleAddUser(people, setPeople)}>Add</ button>
     );
 }

@@ -3,9 +3,10 @@ import AddButton from "./AddButton";
 
 
 describe('UI test for AddButton', () => {
+    let people: object[] = [];
 
     it('Should render AddButton', () => {
-        render(<AddButton handleAddUser={() => true} />);
+        render(<AddButton people={people} setPeople={() => true} />);
         const button = screen.getByText("Add");
 
 
@@ -14,7 +15,7 @@ describe('UI test for AddButton', () => {
 
     it("Should add a new User when AddButton is clicked", async () => {
         const handleClick = jest.fn(() => true);
-        render(<AddButton handleAddUser={handleClick} />);
+        render(<AddButton people={people} setPeople={handleClick} />);
         const button = screen.getByText("Add");
 
         fireEvent.click(button);
