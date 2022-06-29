@@ -1,10 +1,12 @@
-import React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, fireEvent } from "@testing-library/react";
 import List from "./List";
 import { getUsers } from "../services/userService";
 
-// Esto deberia ser una new Promise();
-const users = [{ id: 1, name: 'Pepa juana' }, { id: 2, name: 'juana' }, { id: 3, name: 'Pepa' }];
+const users = [
+    { id: 1, name: "Pepa juana" },
+    { id: 2, name: "juana" },
+    { id: 3, name: "Pepa" },
+];
 
 // jest.mock("../services/userService", () => ({
 //     getUsers: jest.fn().mockImplementation(() => {
@@ -51,8 +53,10 @@ it.only("should render list component after mount", async () => {
 
     expect(getUsers).toHaveBeenCalledTimes(1);
 
-    expect(screen.getByRole('list')).toBeInTheDocument();
-    expect(screen.getAllByRole('listitem')).toHaveLength(3);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(3);
+});
+
 });
 
 
