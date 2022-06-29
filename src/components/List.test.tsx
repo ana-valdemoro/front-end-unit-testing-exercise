@@ -1,7 +1,7 @@
 import { render, screen, act, fireEvent } from "@testing-library/react";
 import List from "./List";
 import { getUsers } from "../services/userService";
-import AddButton from "./AddButton";
+import { AddButton } from "./AddButton";
 
 const users = [
     { id: 1, name: "Pepa juana" },
@@ -9,27 +9,17 @@ const users = [
     { id: 3, name: "Pepa" },
 ];
 
-// jest.mock("../services/userService", () => ({
-//     getUsers: jest.fn().mockImplementation(() => {
-//         return Promise.resolve({
-//             json: jest.fn(() => Promise.resolve(users)),
-//         })
-//     }),
-// }));
-
 jest.mock("../services/userService", () => ({
     getUsers: jest.fn(),
 }));
 
-// jest.mock("./AddButton", () => ({
-//     AddButton: jest.fn(({ people, setPeople }) => (
-//         <button onClick={() => true}>Add</button>
-//     )),
-// }));
-
+jest.mock("./AddButton", () => ({
+    AddButton: jest.fn(() => <div>::AddButton::</div>),
+}));
 
 afterEach(() => {
     (getUsers as jest.Mock).mockReset();
+    jest.clearAllMocks()
 });
 
 it("should not render list component", () => {
@@ -40,7 +30,7 @@ it("should not render list component", () => {
     expect(linkElement).not.toBeInTheDocument();
 });
 
-it("should render list component after mount", async () => {
+it("should render list component after call our getUser service", async () => {
     (getUsers as jest.Mock).mockImplementation(() => {
         return Promise.resolve({
             json: () => Promise.resolve(users),
@@ -50,13 +40,13 @@ it("should render list component after mount", async () => {
     await act(async () => render(<List />) as any);
 
     expect(getUsers).toHaveBeenCalledTimes(1);
-
     expect(screen.getByRole("list")).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(3);
+    expect(AddButton).toBeCalledTimes(1)
 });
 
 
-it.only("should check when AddButton is clicked that people has one more item", async () => {
+it("should check could click on AddButton", async () => {
     (getUsers as jest.Mock).mockImplementation(() => {
         return Promise.resolve({
             json: () => Promise.resolve(users),
@@ -65,24 +55,8 @@ it.only("should check when AddButton is clicked that people has one more item", 
     await act(async () => render(<List />) as any);
     expect(screen.getByRole("list")).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(3);
-    // await act(async () => render(<AddButton />) as any);
-
-    const button = screen.getByText("Add");
+    const button = screen.getByText("::AddButton::");
     fireEvent.click(button);
-
-    // expect(AddButton).toHaveBeenCalledTimes(1);
-    expect(screen.getAllByRole("listitem")).toHaveLength(4);
+    expect(AddButton).toHaveBeenCalledTimes(1);
 
 });
-
-// it('should render 10 li on screen', async () => {
-
-//     render(<List />);
-
-//     await waitFor(() => {
-
-//         expect(screen.getAllByRole('listitem')).toHaveLength(10);
-
-//     });
-
-// });

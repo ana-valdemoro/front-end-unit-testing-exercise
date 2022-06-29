@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import AddButton from "./AddButton";
+import { AddButton } from "./AddButton";
 
 
 describe('UI test for AddButton', () => {
@@ -17,9 +17,7 @@ describe('UI test for AddButton', () => {
         const handleClick = jest.fn(() => true);
         render(<AddButton people={people} setPeople={handleClick} />);
         const button = screen.getByText("Add");
-
         fireEvent.click(button);
-
         expect(handleClick).toBeCalledTimes(1);
     });
 })

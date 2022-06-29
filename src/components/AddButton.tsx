@@ -6,7 +6,7 @@ interface IProps {
 }
 
 
-export default function AddButton({ people, setPeople }: IProps) {
+export const AddButton = ({ people, setPeople }: IProps) =>  {
 
     return (
         <button onClick={() => handleAddUser(people, setPeople)}>Add</ button>

@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getUsers } from "../services/userService";
-import AddButton from "./AddButton";
+import { fetchPeople } from "../utils";
+import {AddButton} from "./AddButton";
 
 function List() {
   const [people, setPeople] = useState<undefined | object[]>(undefined);
 
   useEffect(() => {
-    const fectPeople = async () => {
-      let people: object[];
-      try {
-        people = await (await getUsers()).json();
-        setPeople(people);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fectPeople();
-
+    const asyncFunction = async () => setPeople(await fetchPeople());
+    asyncFunction()
     // Especifica cómo sanear este efecto:
     return () => {
       setPeople(undefined); // This worked for me
